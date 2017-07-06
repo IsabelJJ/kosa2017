@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,36 +27,45 @@ function check() {
 img {
   text-align: center;
 }
+.error{
+   color:red
+}
 </style>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-<form action="insert" method="post" name="fr"  onsubmit="return check();">
+<form:form action="insert" modelAttribute="emp" onsubmit="return check();">
 <div class="container">
 <h1>사원정보 추가 </h1>${message}
 <table border =1 class="table">
 <tr>
   <th>EMPLOYEE_ID</th>
-  <td><input type="number" name="employeeId"></td>
+  <td><form:input path="employeeId"/>
+   <form:errors path="employeeId" cssClass="error"/></td>
 </tr>
 <tr>
   <th>FIRST_NAME</th>
-  <td><input type="text" name="firstName" ></td>
+  <td><form:input path="firstName"/>
+   <form:errors path="firstName" cssClass="error"/></td>
 </tr>
 <tr>
   <th>LAST_NAME</th>
-  <td><input type="text" name="lastName" ></td>
+  <td><form:input path="lastName"/>
+   <form:errors path="lastName" cssClass="error"/></td>
 </tr>
 <tr>
-  <th>EMAIL</th>
-  <td><input type="text" name="email" ></td>
+   <th>EMAIL</th>
+   <td><form:input path="email"/>
+   <form:errors path="email" cssClass="error"/></td>
 </tr>
 <tr>
   <th>PHONE_NUMBER</th>
-  <td><input type="text" name="phoneNumber" ></td>
+   <td><form:input path="phoneNumber"/>
+   <form:errors path="phoneNumber" cssClass="error"/></td>
 </tr>
 <tr>
-  <th>HIRE_DATE</th>
-  <td><input type="date" name="hireDate" ></td>
+	<th>HIRE_DATE</th>
+   <td><form:input path="hireDate" type="date" required="required"/>
+   <form:errors path="hireDate" cssClass="error"/></td>
 </tr>
 <tr>
   <th>JOB_ID</th>
@@ -69,12 +78,14 @@ img {
   </td>
 </tr>
 <tr>
-  <th>SALARY</th>
-  <td><input type="number" name="salary"></td>
+ <th>SALARY</th>
+   <td><form:input path="salary" type="number"/>
+   <form:errors path="salary" cssClass="error"/></td>
 </tr>
 <tr>
-  <th>COMMISSION_PCT</th>
-  <td><input type="number" name="commissionPct" ></td>
+   <th>COMMISSION_PCT</th>
+   <td><form:input path="commissionPct" type="number" step="0.1" min="0.0" max="0.99"/>
+   <form:errors path="commissionPct" cssClass="error"/></td>
 </tr>
 <tr>
   <th>MANAGER_ID</th>
@@ -107,7 +118,7 @@ img {
 </tr>
 </table>
 </div>
-</form>
+</form:form>
 
 
 </body>

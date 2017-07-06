@@ -111,7 +111,7 @@ public class EmpController {
 	// insert get
 	@RequestMapping(value="/insert", method = RequestMethod.GET)
 	public String insertEmp(Model model){
-
+		model.addAttribute("emp", new EmpVO());
 		model.addAttribute("jobs",empService.getAllJobId());
 		model.addAttribute("managers",empService.getAllManagerId());
 		model.addAttribute("depts",empService.getAllDeptId());
@@ -120,15 +120,20 @@ public class EmpController {
 	
 	//insert post
 	@RequestMapping(value="/insert", method = RequestMethod.POST)
-	public String insertEmp(EmpVO emp, Model model){
-		System.out.println(emp);
-		try{
-			empService.insertEmp(emp);
-		}catch(Exception e){
-			model.addAttribute("message", e.getMessage());
-			return "emp/error"; // ${message}
-		}
-		return "redirect:/";//��
+	public String insertEmp(@RequestParam("employeeId") int empId,@ModelAttribute("emp") @Valid EmpVO emp, 
+	         BindingResult result, RedirectAttributes redirectAttrs, Model model){
+		   if(result.hasErrors()){
+		         model.addAttribute("depts", empService.getAllDeptId());
+		         model.addAttribute("jobs", empService.getAllJobId());
+		         model.addAttribute("managers", empService.getAllManagerId());
+		         return"emp/insertform";
+		      }try{
+		         empService.updateEmp(emp);
+		      }catch(RuntimeException e){
+		         redirectAttrs.addFlashAttribute("message", e.getMessage());
+		         return"emp/insertform";
+		      }   
+		      return "redirect:/list";  
 	}
 	
 	 //update get
