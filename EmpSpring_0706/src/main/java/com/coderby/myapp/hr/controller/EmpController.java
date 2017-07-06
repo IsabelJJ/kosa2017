@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,11 +37,13 @@ import com.coderby.myapp.user.service.IUserService;
 
 @Controller
 public class EmpController {
+
 	@Autowired
-	IEmpService empService;
-	static final Logger logger = LoggerFactory.getLogger(EmpController.class);
+	IEmpService empService;	
 	@Autowired
 	IUserService userService;
+	static final Logger logger = LoggerFactory.getLogger(EmpController.class);
+
 	/*
 	//로그인
 
@@ -195,7 +198,7 @@ public class EmpController {
 		mav.setViewName("hr/error");
 		return mav;
 	}
-	
+	//-----------------------------------------------------------------------
 	public Map<String, String> getRole(){
 		Map<String, String> role = new HashMap<String, String>();
 		role.put("1", "관리자");
@@ -204,13 +207,13 @@ public class EmpController {
 	}
 
 	@RequestMapping(value="/insertUser", method = RequestMethod.GET)
-	public String insert(Model model){
+	public String insertUser(Model model){
 		model.addAttribute("role", getRole());
-		logger.info("insert");
+		logger.info("insertUser");
 		return "user/insertform";
 	}
 	@RequestMapping(value="/insertUser", method = RequestMethod.POST)
-	public String insert(UserVO user){
+	public String insertUser(UserVO user){
 		userService.insertUser(user);
 		return "redirect:/";
 	}
@@ -232,7 +235,7 @@ public class EmpController {
 			if(userService.checkPassword(userId, userPassword)){
 				session.setMaxInactiveInterval(300); // 5분 이상 넘어가면 초기화
 				session.setAttribute("userId", userId);
-				return"redirect:/after";
+				return"redirect:/";
 			}
 			else{
 				model.addAttribute("message","아이티 또는 비밀 번호가 잘 못 됐습니다.");
@@ -254,14 +257,14 @@ public class EmpController {
 
 	//삭제  o
 	@RequestMapping(value="/deleteUser", method = RequestMethod.GET)
-	public String delete(HttpSession session,Model model){
+	public String deleteUser(HttpSession session,Model model){
 		String userId=(String)session.getAttribute("userId");
 		model.addAttribute("user", userService.selectUser(userId));
 		return "user/deleteform";
 	}
 
 	@RequestMapping(value="/deleteUser", method = RequestMethod.POST)
-	public String delete(String userPassword,Model model,HttpSession session){
+	public String deleteUser(String userPassword,Model model,HttpSession session){
 
 		String userId = (String)session.getAttribute("userId");
 		if(userId==null||userId.equals("")){
@@ -292,7 +295,7 @@ public class EmpController {
 		}
 		else{
 			model.addAttribute("user", userService.selectUser(userId));
-			return "user/view";
+			return "user/viewUser";
 		}
 	}
 
@@ -322,7 +325,7 @@ public class EmpController {
 		}
 		else{
 			userService.updateUser(user);
-			return "redirect:/view";
+			return "redirect:/viewUser";
 		}
 	}
 

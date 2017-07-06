@@ -15,10 +15,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 			HttpSession session = request.getSession();
 			String contextName = request.getContextPath();
 			String url = request.getRequestURI().replaceFirst(contextName, "");
-			String userid = (String) request.getSession().getAttribute("userid");
+			String userid = (String) request.getSession().getAttribute("userId");
 			String param = request.getQueryString();
 			if(userid == null || userid.equals("")){
-				respone.sendRedirect(request.getContextPath()+"/user/login"); // /user/login 컨트롤러를 실행해라
+				respone.sendRedirect(request.getContextPath()+"/login"); // /user/login 컨트롤러를 실행해라
 				return false;
 			}
 			if(!url.contains("/user/login")&& !url.contains("hr/logout")){

@@ -30,7 +30,7 @@
 	
 	<context:component-scan base-package="com.coderby.myapp.hr.controller"/>
 	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></beans:bean>
-	
+
 	<mvc:view-controller path="/" view-name="home"/>
 
 	<mvc:interceptors>

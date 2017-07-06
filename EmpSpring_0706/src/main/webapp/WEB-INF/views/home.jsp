@@ -25,8 +25,12 @@ html {
     <div class="navbar-header">
       </div>
     <ul class="nav navbar-nav" id="a">
-      <li><a href="insert">INSERT</a></li>
-		<li><a href="list">LIST</a></li>
+    <li><a href="login">LOGIN</a></li>
+    <li><a href="insertUser">CREATE</a></li>
+    <li><a href="updateUser">UPDATE</a></li>	
+      <li><a href="insert">EMP INSERT</a></li>
+		<li><a href="list">EMP LIST</a></li>
+		<li><a href="logout">LOGOUT</a></li>	
     </ul>
   </div>
 
