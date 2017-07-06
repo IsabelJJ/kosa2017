@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.coderby.myapp.hr.dao.EmpRepository.EmpMapper;
-import com.coderby.myapphr.model.EmpVO;
+import com.coderby.myapp.hr.model.EmpVO;
 
 @Repository
 public class EmpRepository implements IEmpRepository {

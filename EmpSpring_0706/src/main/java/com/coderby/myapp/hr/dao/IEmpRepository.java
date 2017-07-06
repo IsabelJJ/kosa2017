@@ -3,7 +3,7 @@ package com.coderby.myapp.hr.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.coderby.myapphr.model.EmpVO;
+import com.coderby.myapp.hr.model.EmpVO;
 
 public interface IEmpRepository {
 	int getEmpCount();

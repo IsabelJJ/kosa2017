@@ -1,4 +1,4 @@
-package com.coderby.myapphr.model;
+package com.coderby.myapp.hr.model;
 
 import java.sql.Date;
 

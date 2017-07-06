@@ -29,15 +29,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.coderby.myapp.hr.model.EmpVO;
 import com.coderby.myapp.hr.service.IEmpService;
-import com.coderby.myapphr.model.EmpVO;
+import com.coderby.myapp.user.model.UserVO;
+import com.coderby.myapp.user.service.IUserService;
 
 @Controller
 public class EmpController {
 	@Autowired
 	IEmpService empService;
 	static final Logger logger = LoggerFactory.getLogger(EmpController.class);
-	
+	@Autowired
+	IUserService userService;
+	/*
 	//로그인
 
 	@RequestMapping(value="/login" , method=RequestMethod.GET)
@@ -68,13 +72,8 @@ public class EmpController {
 			return"emp/loginform";
 		}
 	}
-	@RequestMapping(value="/logout" , method=RequestMethod.GET)
-	public String logout(HttpSession session){
-		session.invalidate();
-		return"redirect:/";
-	}
-	
 
+*/
 	// view
 	@RequestMapping(value="/{empId}", method=RequestMethod.GET)
 	public String getEmpInfo(@PathVariable int empId,Model model){
@@ -197,6 +196,142 @@ public class EmpController {
 		return mav;
 	}
 	
+	public Map<String, String> getRole(){
+		Map<String, String> role = new HashMap<String, String>();
+		role.put("1", "관리자");
+		role.put("2", "사용자");
+		return role;
+	}
+
+	@RequestMapping(value="/insertUser", method = RequestMethod.GET)
+	public String insert(Model model){
+		model.addAttribute("role", getRole());
+		logger.info("insert");
+		return "user/insertform";
+	}
+	@RequestMapping(value="/insertUser", method = RequestMethod.POST)
+	public String insert(UserVO user){
+		userService.insertUser(user);
+		return "redirect:/";
+	}
+
+	@RequestMapping(value="/login" , method=RequestMethod.GET)
+	public String login(HttpSession session){
+
+		return"user/loginform";
+	}
+	@RequestMapping(value="/after" , method=RequestMethod.GET)
+	public String after(){
+
+		return"user/afterform";
+	}
 	
+	@RequestMapping(value="/login" , method=RequestMethod.POST)
+	public String login(String userId, String userPassword,Model model, HttpSession session){
+		try{
+			if(userService.checkPassword(userId, userPassword)){
+				session.setMaxInactiveInterval(300); // 5분 이상 넘어가면 초기화
+				session.setAttribute("userId", userId);
+				return"redirect:/after";
+			}
+			else{
+				model.addAttribute("message","아이티 또는 비밀 번호가 잘 못 됐습니다.");
+				session.invalidate();
+				return"user/loginform";
+			}
+		}
+		catch(Exception e){
+			session.invalidate();
+			model.addAttribute("message", e.getMessage());
+			return"user/loginform";
+		}
+	}
+	@RequestMapping(value="/logout" , method=RequestMethod.GET)
+	public String logout(HttpSession session){
+		session.invalidate();
+		return"redirect:/";
+	}
+
+	//삭제  o
+	@RequestMapping(value="/deleteUser", method = RequestMethod.GET)
+	public String delete(HttpSession session,Model model){
+		String userId=(String)session.getAttribute("userId");
+		model.addAttribute("user", userService.selectUser(userId));
+		return "user/deleteform";
+	}
+
+	@RequestMapping(value="/deleteUser", method = RequestMethod.POST)
+	public String delete(String userPassword,Model model,HttpSession session){
+
+		String userId = (String)session.getAttribute("userId");
+		if(userId==null||userId.equals("")){
+			model.addAttribute("message","로그인 사용자가 아닙니다");
+			session.invalidate();
+			return "user/loginform";
+		}else{
+			if(userService.checkPassword(userId, userPassword)){
+				userService.deleteUser(userId, userPassword);
+				session.invalidate();
+				return "redirect:/";
+			}
+			else{
+				model.addAttribute("message",": 비밀번호가 다릅니다.");
+				return "redirect:/deleteform";
+			}
+
+		}
+	}
+
+	//조회 o
+	@RequestMapping(value="/viewUser", method=RequestMethod.GET)
+	public String getUser(HttpSession session, Model model){
+		String userId=(String)session.getAttribute("userId");
+		if(userId==null||userId.equals("")){
+			model.addAttribute("message","로그인 사용자가 아닙니다");
+			return "user/loginform";
+		}
+		else{
+			model.addAttribute("user", userService.selectUser(userId));
+			return "user/view";
+		}
+	}
+
+	
+	// 수정	
+	@RequestMapping(value="/updateUser", method= RequestMethod.GET)
+	public String updateUser(HttpSession session,Model model){
+		String userId=(String)session.getAttribute("userId");
+		model.addAttribute("role", getRole());
+		if(userId==null||userId.equals("")){
+			model.addAttribute("message","로그인 사용자가 아닙니다");
+			return "user/loginform";
+		}
+		else{
+			model.addAttribute("user", userService.selectUser(userId));
+			return "user/updateform";
+		}
+
+	}
+	@RequestMapping(value="/updateUser", method= RequestMethod.POST)
+	public String updateUser(UserVO user,HttpSession session ,Model model){
+		String userId=(String)session.getAttribute("userId");
+		model.addAttribute("role", getRole());
+		if(userId==null||userId.equals("")){
+			model.addAttribute("message","로그인 사용자가 아닙니다");
+			return "user/loginform";
+		}
+		else{
+			userService.updateUser(user);
+			return "redirect:/view";
+		}
+	}
+
+
+	@RequestMapping("/listUser")
+	public String getUserList(Model model){
+		List<UserVO> users = userService.seletAllUser();		
+		model.addAttribute("users", users);
+		return "user/list";
+	}
 
 }

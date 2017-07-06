@@ -3,8 +3,8 @@ package com.coderby.myapp;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.coderby.myapp.hr.model.EmpVO;
 import com.coderby.myapp.hr.service.IEmpService;
-import com.coderby.myapphr.model.EmpVO;
  
 public class EmpMain {
   public static void main(String[] args) {
@@ -12,17 +12,17 @@ public class EmpMain {
       new ClassPathXmlApplicationContext("spring/application-config.xml");
     IEmpService empService = context.getBean("empService", IEmpService.class);
      
-    System.out.println("-- »ç¿øÀÇ ¼ö Á¶È¸");
+    System.out.println("-- ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸");
     System.out.println(empService.getEmpCount());
     System.out.println(empService.getEmpCount(50));
      
-    System.out.println("-- 103¹ø »ç¿øÀÇ Á¤º¸¸¦ Á¶È¸ÇÕ´Ï´Ù.");
+    System.out.println("-- 103ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Õ´Ï´ï¿½.");
     System.out.println(empService.getEmpInfo(103));
      
-    System.out.println("-- »ç¿ø ÀüÃ¼ Á¤º¸¸¦ Á¶È¸ÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Õ´Ï´ï¿½.");
     System.out.println(empService.getEmpList());
      
-    System.out.println("-- »õ·Î¿î »ç¿ø Á¤º¸¸¦ ÀÔ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Õ´Ï´ï¿½.");
     EmpVO emp = new EmpVO();
     emp.setEmployeeId(210);
     emp.setFirstName("JinKyoung");
@@ -41,27 +41,27 @@ public class EmpMain {
       System.out.println(e.getMessage());
     }
      
-    System.out.println("-- ½Å±Ô »ç¿øÀÇ Á¤º¸¸¦ Á¶È¸/Ãâ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸/ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     EmpVO emp210 = empService.getEmpInfo(210);
     System.out.println(emp210);
      
-    System.out.println("-- 210¹ø »ç¿øÀÇ ±Þ¿©¸¦ 10% ÀÎ»ó½ÃÅµ´Ï´Ù.");
+    System.out.println("-- 210ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¿ï¿½ï¿½ï¿½ 10% ï¿½Î»ï¿½ï¿½Åµï¿½Ï´ï¿½.");
     emp210.setSalary(emp210.getSalary() * 1.1);
      
-    System.out.println("-- ¼öÁ¤µÈ »ç¿øÀÇ Á¤º¸¸¦Á¶È¸/Ãâ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸/ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     emp210 = empService.getEmpInfo(210);
     System.out.println(emp210);
      
-    System.out.println("-- 210¹ø »ç¿øÀÇ Á¤º¸¸¦ »èÁ¦ÇÕ´Ï´Ù.");
+    System.out.println("-- 210ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     empService.deleteEmp(210, "HEOJK");
      
-    System.out.println("-- ¸ðµç ºÎ¼­¹øÈ£¿Í ºÎ¼­ÀÌ¸§ Á¤º¸¸¦ Ãâ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½ ï¿½Î¼ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Î¼ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     System.out.println(empService.getAllDeptId());
      
-    System.out.println("-- ¸ðµç Á÷¹«¾ÆÀÌµð¿Í Á÷¹«Å¸ÀÌÆ²À» Ãâ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     System.out.println(empService.getAllJobId());
      
-    System.out.println("-- ¸ðµç ¸Å´ÏÀú¹øÈ£¿Í ¸Å´ÏÀúÀÌ¸§À» Ãâ·ÂÇÕ´Ï´Ù.");
+    System.out.println("-- ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
     System.out.println(empService.getAllManagerId());
   }
 }

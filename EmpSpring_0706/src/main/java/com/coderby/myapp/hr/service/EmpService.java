@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderby.myapp.hr.dao.IEmpRepository;
-import com.coderby.myapphr.model.EmpVO;
+import com.coderby.myapp.hr.model.EmpVO;
 
 @Service
 public class EmpService implements IEmpService {
