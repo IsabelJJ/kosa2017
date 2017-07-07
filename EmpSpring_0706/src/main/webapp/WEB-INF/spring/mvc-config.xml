@@ -36,6 +36,10 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/list"/>
+			<mvc:mapping path="/insert"/>
+			<mvc:mapping path="/update/**"/>
+			<mvc:mapping path="/delete/**"/>
+			<mvc:mapping path="/deleteUser"/>
 			<beans:bean class="com.coderby.myapp.hr.commom.LoginCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

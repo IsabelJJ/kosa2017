@@ -21,7 +21,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 				respone.sendRedirect(request.getContextPath()+"/login"); // /user/login 컨트롤러를 실행해라
 				return false;
 			}
-			if(!url.contains("/user/login")&& !url.contains("hr/logout")){
+			if(!url.contains("/user/login")&& !url.contains("/logout")){
 				session.setAttribute("url", url);
 				session.setAttribute("param", param);
 			}else{

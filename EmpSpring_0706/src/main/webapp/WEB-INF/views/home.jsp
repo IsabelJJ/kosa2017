@@ -27,6 +27,7 @@ html {
     <ul class="nav navbar-nav" id="a">
     <li><a href="login">LOGIN</a></li>
     <li><a href="insertUser">CREATE</a></li>
+    <li><a href="deleteUser">DELETE</a></li>
     <li><a href="updateUser">UPDATE</a></li>	
       <li><a href="insert">EMP INSERT</a></li>
 		<li><a href="list">EMP LIST</a></li>
